@@ -1,3 +1,4 @@
+####automation v1 #####
 #!/bin/bash
 s3bucket="upgrad-ayesh"
 name="ayesh"
