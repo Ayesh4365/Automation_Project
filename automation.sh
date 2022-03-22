@@ -19,3 +19,17 @@ if [ -f /tmp/${name}-httpd-logs-${timestamp}.tar ];
 then
     aws s3 cp /tmp/${name}-httpd-logs-${timestamp}.tar s3://${s3bucket}/${name}-httpd-logs-${timestamp}.tar
 fi
+documentroot="/var/www/html"
+if [ ! -f ${documentroot}/inventory.html ];
+then
+    echo -e 'Log Type\t-\tTime Created\t-\tType\t-\tSize' >> ${documentroot}/inventory.html
+fi
+if [ -f ${documentroot}/inventory.html ];
+then
+    size=$(du -h /tmp/${name}-httpd-logs-${timestamp}.tar | awk '{print $1}')
+	echo -e "httpd-logs\t-\t${timestamp}\t-\ttar\t-\t${size}" >> ${documentroot}/invetntory.html
+fi
+if [ ! -f /etc/cron.d/Automation ];
+then
+    echo " * * * * * /root/Automation_Project/automation.sh" >> /etc/cron.d/Automation
+fi
